@@ -1,77 +1,43 @@
 "use client";
 
 import { useState } from "react";
-import { Instagram, MessageCircle, Music2 } from "lucide-react";
-import { Menu, X, Globe } from "lucide-react";
-import { BiCheckShield, BiFile } from "react-icons/bi";
-import { FaTripadvisor } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/app/context/ContectLanguage";
+import { blogs } from "@/lib/blogs";
+import { motion, Variants } from "framer-motion";
+import { BiFile, BiCheckShield } from "react-icons/bi";
 
 const wa = process.env.NEXT_PUBLIC_WA_NUMBER;
-const mahakaUrl =
-  process.env.NEXT_PUBLIC_MAHAKA_URL ?? "https://mahakaattraction.id";
 
-/* ================= TRANSLATION ================= */
-const translations = {
-  id: {
-    nav: {
-      home: "Home",
-      about: "Tentang Kami",
-      gallery: "Galeri",
-      paket: "Paket",
-      kontak: "Kontak",
-    },
-    homeTitle: "Liburan Impian Anda",
-    homeDesc: "Nikmati paket wisata terbaik dengan pelayanan profesional.",
-    galleryTitle: "Galeri Wisata",
-    paketTitle: "Paket Wisata",
-    kontakTitle: "Kontak Kami",
-    detail: "Detail",
-    booking: "Booking",
-    close: "Tutup",
-    sendWA: "Kirim ke WhatsApp",
-    cancel: "Batal",
-    form: {
-      title: "Form Booking",
-      name: "Nama Lengkap",
-      phone: "No WhatsApp",
-      email: "Email",
-      date: "Tanggal Berangkat",
-      people: "Jumlah Peserta",
-      note: "Catatan Tambahan",
-    },
-    waIntro: "Halo, saya ingin booking paket",
-  },
-  en: {
-    nav: {
-      home: "Home",
-      about: "About Us",
-      gallery: "Gallery",
-      paket: "Packages",
-      kontak: "Contact",
-    },
-    homeTitle: "Your Dream Vacation",
-    homeDesc: "Enjoy the best tour packages with professional service.",
-    galleryTitle: "Travel Gallery",
-    paketTitle: "Tour Packages",
-    kontakTitle: "Contact Us",
-    detail: "Details",
-    booking: "Booking",
-    close: "Close",
-    sendWA: "Send to WhatsApp",
-    cancel: "Cancel",
-    form: {
-      title: "Booking Form",
-      name: "Full Name",
-      phone: "WhatsApp Number",
-      email: "Email",
-      date: "Departure Date",
-      people: "Number of People",
-      note: "Additional Notes",
-    },
-    waIntro: "Hello, I would like to book the package",
-  },
+type LangText = {
+  id: string;
+  en: string;
+};
+
+type LangList = {
+  id: string[];
+  en: string[];
+};
+
+type PriceItem = {
+  pax: string;
+  price: string;
+};
+
+type PackageDetail = {
+  description: LangText;
+  facilities: LangList;
+  exclude: LangList;
+  prices: PriceItem[];
+};
+
+type PackageItem = {
+  id: number;
+  name: string;
+  days: string;
+  price: string;
+  image: string;
 };
 
 /* ================= DATA PAKET ================= */
@@ -112,36 +78,6 @@ const packages = [
     image: "/images/paket-7.jpg",
   },
 ];
-
-type LangText = {
-  id: string;
-  en: string;
-};
-
-type LangList = {
-  id: string[];
-  en: string[];
-};
-
-type PriceItem = {
-  pax: string;
-  price: string;
-};
-
-type PackageDetail = {
-  description: LangText;
-  facilities: LangList;
-  exclude: LangList;
-  prices: PriceItem[];
-};
-
-type PackageItem = {
-  id: number;
-  name: string;
-  days: string;
-  price: string;
-  image: string;
-};
 
 const packageDetails: Record<number, PackageDetail> = {
   1: {
@@ -361,10 +297,35 @@ const getPriceByPax = (prices: PriceItem[], pax: number): number => {
 
 const formatRupiah = (value: number) => "IDR " + value.toLocaleString("id-ID");
 
-export default function Page() {
-  const [menuOpen, setMenuOpen] = useState(false);
+const sectionFadeLeft: Variants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: "easeOut" },
+  },
+};
 
-  const [lang, setLang] = useState<"id" | "en">("id");
+const sectionFadeUp: Variants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: "easeOut" },
+  },
+};
+
+const sectionZoom: Variants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.7, ease: "easeOut" },
+  },
+};
+
+export default function HomeClient() {
+  const { lang, t } = useLanguage();
 
   const [detail, setDetail] = useState<PackageItem | null>(null);
 
@@ -378,149 +339,16 @@ export default function Page() {
 
   const totalPrice = pricePerPax * people;
 
-  const t = translations[lang];
-
   return (
     <main className="font-sans">
-      {/* ================= NAVBAR ================= */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur shadow-sm">
-        <h2 className="sr-only">
-          Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
-        </h2>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-3">
-            <Image
-              src="/images/logo.png"
-              alt="Logo"
-              className="h-10 w-auto"
-              height={"600"}
-              width={"300"}
-            />
-            <span className="font-bold text-lg">
-              Story<span className="unbounded-font text-red-700">Sumba</span>
-            </span>
-          </a>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#home" className="hover:text-red-600">
-              {t.nav.home}
-            </a>
-            <a href="#about" className="hover:text-red-600">
-              {t.nav.about}
-            </a>
-            <a href="#gallery" className="hover:text-red-600">
-              {t.nav.gallery}
-            </a>
-            <a href="#paket" className="hover:text-red-600">
-              {t.nav.paket}
-            </a>
-            <a href="#kontak" className="hover:text-red-600">
-              {t.nav.kontak}
-            </a>
-
-            {/* Language Switch */}
-            <button
-              onClick={() => setLang(lang === "id" ? "en" : "id")}
-              className="flex items-center gap-1 border px-3 py-1 rounded-lg text-sm hover:bg-gray-100"
-            >
-              <Globe size={16} />
-              {lang === "id" ? "EN" : "ID"}
-            </button>
-          </div>
-
-          {/* Mobile Button */}
-          <button className="md:hidden" onClick={() => setMenuOpen(true)}>
-            <Menu size={28} />
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {menuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            {/* Overlay */}
-            <div
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-              onClick={() => setMenuOpen(false)}
-            />
-
-            {/* Drawer */}
-            <div className="absolute top-0 right-0 w-72 h-screen bg-black/90 text-gray-300 p-6 flex flex-col">
-              {/* Close */}
-              <button
-                className="absolute top-4 right-4 text-gray-400 hover:text-white transition"
-                onClick={() => setMenuOpen(false)}
-              >
-                <X size={24} />
-              </button>
-
-              {/* Menu */}
-              <nav className="mt-16 space-y-8">
-                <a
-                  href="#home"
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-xl font-semibold hover:text-white transition"
-                >
-                  {t.nav.home}
-                </a>
-
-                <a
-                  href="#about"
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-xl font-semibold hover:text-white transition"
-                >
-                  {t.nav.about}
-                </a>
-
-                <a
-                  href="#gallery"
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-xl font-semibold hover:text-white transition"
-                >
-                  {t.nav.gallery}
-                </a>
-
-                <a
-                  href="#paket"
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-xl font-semibold hover:text-white transition"
-                >
-                  {t.nav.paket}
-                </a>
-
-                <a
-                  href="#kontak"
-                  onClick={() => setMenuOpen(false)}
-                  className="block text-xl font-semibold hover:text-white transition"
-                >
-                  {t.nav.kontak}
-                </a>
-              </nav>
-
-              {/* Divider */}
-              <div className="my-10 border-t border-gray-700" />
-
-              {/* Language Switch */}
-              <button
-                onClick={() => {
-                  setLang(lang === "id" ? "en" : "id");
-                  setMenuOpen(false);
-                }}
-                className="mt-auto w-full flex items-center justify-center gap-2 border border-gray-600 rounded-lg py-3 text-lg font-semibold text-gray-300 hover:bg-white/10 hover:text-white transition"
-              >
-                <Globe size={18} />
-                {lang === "id" ? "English" : "Bahasa"}
-              </button>
-            </div>
-          </div>
-        )}
-      </nav>
-
       {/* ================= HOME ================= */}
-      <section
+      <motion.section
         id="home"
         className="relative min-h-screen flex items-center justify-center text-center px-6 overflow-hidden"
+        variants={sectionFadeUp}
+        initial="visible"
+        animate="visible"
+        viewport={{ once: true }}
       >
         <h2 className="sr-only">
           Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
@@ -555,11 +383,6 @@ export default function Page() {
               : "Enjoy the best tour packages with professional service and handpicked destinations."}
           </p>
 
-          {/* <p className="text-gray-600 mb-7">
-            Kami menyediakan <strong>paket wisata Sumba terpercaya</strong>{" "}
-            dengan durasi 3 hari hingga 7 hari.
-          </p> */}
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#paket"
@@ -567,22 +390,18 @@ export default function Page() {
             >
               {lang === "id" ? "Lihat Paket" : "View Packages"}
             </a>
-
-            {/* <a
-              href="https://wa.me/+6281246994982"
-              target="_blank"
-              className="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-xl font-semibold transition"
-            >
-              {lang === "id" ? "Konsultasi Gratis" : "Free Consultation"}
-            </a> */}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ================= ABOUT ================= */}
-      <section
+      <motion.section
         id="about"
         className="py-24 px-6 bg-linear-to-b from-white via-gray-50 to-white"
+        variants={sectionFadeLeft}
+        initial="visible"
+        animate="visible"
+        viewport={{ once: true }}
       >
         <h2 className="sr-only">
           Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
@@ -651,12 +470,16 @@ export default function Page() {
             />
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ================= GALLERY ================= */}
-      <section
+      <motion.section
         id="gallery"
         className="py-20 px-6 bg-linear-to-b from-gray-900 via-gray-800 to-gray-900"
+        variants={sectionZoom}
+        initial="visible"
+        animate="visible"
+        viewport={{ once: true }}
       >
         <h2 className="sr-only">
           Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
@@ -687,12 +510,16 @@ export default function Page() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* ================= PAKET ================= */}
-      <section
+      <motion.section
         id="paket"
         className="py-20 px-6 bg-linear-to-b from-gray-50 via-white to-gray-100"
+        variants={sectionFadeUp}
+        initial="visible"
+        animate="visible"
+        viewport={{ once: true }}
       >
         <h2 className="sr-only">
           Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
@@ -717,21 +544,15 @@ export default function Page() {
                 <p className="mt-2 font-semibold">{p.price}</p>
 
                 <div className="flex gap-3 mt-4">
-                  {/* <Link
-                    href={`/paket/${p.id}`}
-                    className="flex-1 bg-white/90 text-black py-2 rounded-lg text-center"
-                  >
-                    {t.detail}
-                  </Link> */}
                   <button
                     onClick={() => setDetail(p)}
-                    className="flex-1 bg-white/90 text-black py-2 rounded-lg"
+                    className="flex-1 bg-white/90 cursor-pointer text-black py-2 rounded-lg"
                   >
                     {t.detail}
                   </button>
                   <button
                     onClick={() => setBooking(p)}
-                    className="flex-1 bg-red-600 py-2 rounded-lg"
+                    className="flex-1 bg-red-600 cursor-pointer py-2 rounded-lg"
                   >
                     {t.booking}
                   </button>
@@ -740,12 +561,85 @@ export default function Page() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
+
+      {/* ================= BLOG ================= */}
+      <motion.section
+        id="blog"
+        className="py-20 px-6 bg-linear-to-b from-white via-gray-50 to-white"
+        variants={sectionFadeUp}
+        initial="visible"
+        animate="visible"
+        viewport={{ once: true }}
+      >
+        <h2 className="sr-only">Blog Wisata Sumba</h2>
+
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12">
+            {t.blogTitle} {/* Menggunakan translasi statis */}
+          </h2>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {blogs.map((blog) => (
+              <motion.article
+                key={blog.id}
+                whileHover={{ y: -6 }}
+                className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-2xl transition"
+              >
+                {/* Image */}
+                <div className="relative h-52">
+                  <Image
+                    src={blog.image}
+                    alt={blog.title[lang]} // Mengakses judul berdasarkan bahasa
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <p className="text-sm text-gray-500 mb-2">
+                    {new Date(blog.date).toLocaleDateString(
+                      lang === "id" ? "id-ID" : "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
+                  </p>
+
+                  <h3 className="text-xl font-bold mb-2 line-clamp-2">
+                    {blog.title[lang]}{" "}
+                    {/* Mengakses judul berdasarkan bahasa */}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {blog.excerpt[lang]}{" "}
+                    {/* Mengakses ringkasan berdasarkan bahasa */}
+                  </p>
+
+                  <Link
+                    href={`/blog/${blog.slug[lang]}?lang=${lang}`}
+                    className="inline-flex items-center text-red-600 font-semibold hover:underline"
+                  >
+                    {lang === "id" ? "Baca Selengkapnya" : "Read More"} →
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </motion.section>
 
       {/* ================= KONTAK ================= */}
-      <section
+      <motion.section
         id="kontak"
         className="py-20 px-6 bg-linear-to-b from-white via-gray-100 to-white"
+        variants={sectionFadeUp}
+        initial="visible"
+        animate="visible"
+        viewport={{ once: true }}
       >
         <h2 className="sr-only">
           Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
@@ -814,164 +708,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ================= FOOTER ================= */}
-      <footer className="bg-black text-gray-300">
-        <h2 className="sr-only">
-          Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
-        </h2>
-        <div className="max-w-7xl mx-auto px-6 py-12 grid gap-6 md:grid-cols-5">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center mb-3">
-              <Image
-                src="/images/logo.png"
-                alt="Travel Agent Logo"
-                className="h-12 w-auto"
-                height={"300"}
-                width={"50"}
-              />
-              <h3 className="text-xl font-bold text-white">
-                Story<span className="unbounded-font text-red-700">Sumba</span>
-              </h3>
-            </div>
-
-            <p className="text-sm text-gray-300">
-              {lang === "id"
-                ? "Partner perjalanan terbaik untuk liburan Anda."
-                : "Your trusted partner for unforgettable journeys."}
-            </p>
-
-            {/* Social Media */}
-            <div className="flex gap-4 mt-4">
-              {/* Instagram */}
-              <a
-                href="https://instagram.com/username"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-pink-600 transition"
-              >
-                <Instagram size={20} className="text-white" />
-              </a>
-
-              {/* WhatsApp */}
-              <a
-                href="https://wa.me/+6281246994982"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-green-600 transition"
-              >
-                <MessageCircle size={20} className="text-white" />
-              </a>
-
-              {/* TikTok */}
-              <a
-                href="https://tiktok.com/@username"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-black transition"
-              >
-                <Music2 size={20} className="text-white" />
-              </a>
-
-              {/* Tripadvisor */}
-              <a
-                href="https://www.tripadvisor.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-green-700 transition"
-                aria-label="Tripadvisor"
-              >
-                <FaTripadvisor size={20} className="text-white" />
-              </a>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h4 className="text-white font-semibold mb-3">
-              {lang === "id" ? "Menu" : "Menu"}
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#home" className="hover:text-white">
-                  {t.nav.home}
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="hover:text-white">
-                  {t.nav.gallery}
-                </a>
-              </li>
-              <li>
-                <a href="#paket" className="hover:text-white">
-                  {t.nav.paket}
-                </a>
-              </li>
-              <li>
-                <a href="#kontak" className="hover:text-white">
-                  {t.nav.kontak}
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Permit */}
-          <div>
-            <h4 className="text-white font-semibold mb-3">
-              {lang === "id" ? "Ijin Pariwisata" : "Tourism Permit"}
-            </h4>
-            <div className="items-center justify-center">
-              <Image
-                src="/images/ijin.jpg"
-                alt="Travel Agent Ijin"
-                className="h-30 w-auto"
-                height={"600"}
-                width={"300"}
-              />
-            </div>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-3">
-              {lang === "id" ? "Unit Bisnis Dari" : "Subsidiary Of"}
-            </h4>
-            {/* <p className="text-white font-semibold mb-3">
-              {lang === "id" ? "Mahaka Attraction" : "Mahaka Attraction"}
-            </p> */}
-            <div className="items-center justify-center">
-              <Link href={mahakaUrl} target="_blank" rel="noopener noreferrer">
-                <Image
-                  src="/images/logo-mahaka.jpg"
-                  alt="Mahaka attraction"
-                  className="h-12 w-auto cursor-pointer hover:opacity-80 transition "
-                  height={"50"}
-                  width={"300"}
-                />
-              </Link>
-            </div>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-white font-semibold mb-3">
-              {lang === "id" ? "Kontak" : "Contact"}
-            </h4>
-            <p className="text-sm">Email: storysumbatravel@gmail.com</p>
-            <p className="text-sm">WhatsApp: +62812-4699-4982</p>
-            {/* <p className="text-sm mt-2">
-              {lang === "id" ? "Siap melayani 24/7" : "Available 24/7"}
-            </p> */}
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="border-t border-gray-700 py-4 text-center text-sm">
-          © {new Date().getFullYear()} StorySumba.
-          {lang === "id" ? " Seluruh hak cipta." : " All rights reserved."}
-        </div>
-      </footer>
+      </motion.section>
 
       {/* ================= MODAL DETAIL ================= */}
       {detail && (
@@ -1191,6 +928,7 @@ export default function Page() {
           </div>
         </div>
       )}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -1198,9 +936,9 @@ export default function Page() {
             "@context": "https://schema.org",
             "@type": "TravelAgency",
             name: "Story Sumba Travel",
-            url: "https://storysumba.com",
-            logo: "https://storysumba.com/images/logo.png",
-            image: "https://storysumba.com/images/seo-cover.jpg",
+            url: "https://storysumbatravel.com",
+            logo: "https://storysumbatravel.com/images/logo.png",
+            image: "https://storysumbatravel.com/images/seo-cover.jpg",
             description:
               "Travel agent profesional penyedia paket wisata Sumba dengan guide lokal berpengalaman.",
             address: {
@@ -1217,9 +955,9 @@ export default function Page() {
               contactType: "customer service",
             },
             sameAs: [
-              "https://instagram.com/username",
+              "https://instagram.com/storysumba",
               "https://www.tripadvisor.com",
-              "https://www.tiktok.com/@username",
+              "https://www.tiktok.com/@storysumba",
             ],
           }),
         }}

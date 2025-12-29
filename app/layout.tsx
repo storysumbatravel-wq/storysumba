@@ -1,5 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
+import { LanguageProvider } from "@/app/context/ContectLanguage";
+import Navbar from "@/app/components/Navbar"; // Sesuaikan path-nya
+import Footer from "@/app/components/Footer"; // Sesuaikan path-nya
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +32,12 @@ export const metadata = {
   keywords: [
     "Travel Sumba",
     "Paket Wisata Sumba",
+    "Tour",
     "Tour Sumba",
-    "Sumba Tour Package",
+    "Sumba",
+    "Travel Agent",
     "Sumba Travel Agent",
+    "Sumba Tour Package",
   ],
 
   authors: [{ name: "Story Sumba Travel" }],
@@ -37,11 +46,11 @@ export const metadata = {
   /* 🔥 TITLE ICON / FAVICON */
   icons: {
     icon: [
-      { url: "/favicon-32.png", sizes: "32x32", type: "images/logo2.png" },
-      { url: "/favicon-48.png", sizes: "48x48", type: "images/logo2.png" },
+      { url: "/images/logo2.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/logo2.png", sizes: "48x48", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.ico",
+    shortcut: "/favicon.icon",
   },
 
   openGraph: {
@@ -86,10 +95,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
+      <head>
+        {GA_ID && (
+          <>
+            {/* Google Analytics */}
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <LanguageProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );
