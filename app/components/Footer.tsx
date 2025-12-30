@@ -31,11 +31,11 @@ export default function Footer() {
               src="/images/logo.png"
               alt="Story Sumba Logo"
               className="h-12 w-auto"
-              height={300} // Gunakan number, bukan string
-              width={50}
+              height={"300"} // Gunakan number, bukan string
+              width={"50"}
             />
             <h3 className="text-xl font-bold text-white ml-2">
-              Story<span className="text-red-700">Sumba</span>
+              STORY<span className="text-red-700">SUMBA</span>
             </h3>
           </div>
 
@@ -50,7 +50,7 @@ export default function Footer() {
               href="https://instagram.com/storysumba"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full bg-white/10 hover:bg-pink-600 transition"
+              className="p-2 rounded-full bg-white/10 hover:bg-red-600 transition"
             >
               <Instagram size={20} className="text-white" />
             </a>
@@ -104,9 +104,9 @@ export default function Footer() {
           <Image
             src="/images/ijin.jpg"
             alt="Travel Agent Permit"
-            className="rounded shadow-lg"
-            height={600}
-            width={300}
+            className="h-50 w-auto rounded shadow-lg"
+            height={"600"}
+            width={"300"}
           />
         </div>
 
@@ -120,8 +120,8 @@ export default function Footer() {
               src="/images/logo-mahaka.jpg"
               alt="Mahaka Attraction"
               className="h-12 w-auto cursor-pointer hover:opacity-80 transition"
-              height={50}
-              width={300}
+              height={"50"}
+              width={"300"}
             />
           </Link>
         </div>

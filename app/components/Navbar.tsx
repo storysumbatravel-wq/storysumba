@@ -1,17 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLanguage } from "@/app/context/ContectLanguage";
 import Image from "next/image";
 import { Menu, X, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/app/context/ContectLanguage";
 import Link from "next/link";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { lang, setLang, t } = useLanguage();
 
-  const toggleLang = () => setLang(lang === "id" ? "en" : "id");
+  // OPTIONAL: restore language from localStorage (AMAN)
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang === "id" || savedLang === "en") {
+      setLang(savedLang);
+    }
+  }, [setLang]);
+
+  const toggleLang = () => {
+    const nextLang = lang === "id" ? "en" : "id";
+    setLang(nextLang);
+    localStorage.setItem("lang", nextLang);
+  };
 
   return (
     <motion.nav
@@ -20,15 +32,17 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur shadow-sm"
     >
+      {/* SEO HIDDEN TITLE */}
       <h2 className="sr-only">
         Paket Wisata Sumba 3 Hari 2 Malam, 4 Hari 3 Malam, 5 Hari 4 Malam
       </h2>
+
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/images/logo.png"
-            alt="Logo"
+            alt="Story Sumba Travel"
             height={40}
             width={120}
             className="h-10 w-auto"
@@ -45,9 +59,8 @@ export default function Navbar() {
               <Link
                 key={item}
                 href={item === "home" ? "/" : `/#${item}`}
-                className="..."
+                className="hover:text-red-700 transition"
               >
-                {/* Gunakan 'as keyof typeof t.nav' agar tidak error */}
                 {t.nav[item as keyof typeof t.nav]}
               </Link>
             )
@@ -71,23 +84,27 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-60 md:hidden"
+            className="fixed inset-0 z-50 md:hidden"
           >
+            {/* Overlay (click anywhere to close) */}
             <div
               className="absolute inset-0 bg-black/70 backdrop-blur-sm"
               onClick={() => setMenuOpen(false)}
             />
+
+            {/* Drawer */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
               className="absolute top-0 right-0 w-72 h-screen bg-black text-gray-300 p-6 flex flex-col"
             >
               <button
@@ -97,15 +114,15 @@ export default function Navbar() {
                 <X size={24} />
               </button>
 
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 text-lg">
                 {["home", "about", "gallery", "paket", "blog", "kontak"].map(
                   (item) => (
                     <Link
                       key={item}
                       href={item === "home" ? "/" : `/#${item}`}
-                      className="hover:text-red-800"
+                      onClick={() => setMenuOpen(false)}
+                      className="hover:text-red-500 transition"
                     >
-                      {/* Gunakan 'as keyof typeof t.nav' agar tidak error */}
                       {t.nav[item as keyof typeof t.nav]}
                     </Link>
                   )

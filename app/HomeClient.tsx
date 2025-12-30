@@ -8,6 +8,14 @@ import { blogs } from "@/lib/blogs";
 import { motion, Variants } from "framer-motion";
 import { BiFile, BiCheckShield } from "react-icons/bi";
 
+// 1. IMPORT LIGHTBOX & PLUGINS
+import Lightbox from "yet-another-react-lightbox";
+import Download from "yet-another-react-lightbox/plugins/download";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+
 const wa = process.env.NEXT_PUBLIC_WA_NUMBER;
 
 type LangText = {
@@ -339,6 +347,29 @@ export default function HomeClient() {
 
   const totalPrice = pricePerPax * people;
 
+  // 2. STATE UNTUK LIGHTBOX
+  const [galleryIndex, setGalleryIndex] = useState(-1);
+
+  // Daftar gambar galeri
+  const galleryImages = [
+    "/images/gallery-1.jpg",
+    "/images/gallery-2.jpg",
+    "/images/gallery-3.jpg",
+    "/images/gallery-4.jpg",
+    "/images/gallery-5.jpg",
+    "/images/gallery-6.jpg",
+    "/images/gallery-7.jpg",
+    "/images/gallery-8.jpg",
+  ];
+
+  // Format untuk slides
+  const slides = galleryImages.map((src) => ({ src }));
+
+  const mounted = useState(true);
+
+  if (!mounted) {
+    return <main className="font-sans opacity-0" />;
+  }
   return (
     <main className="font-sans">
       {/* ================= HOME ================= */}
@@ -346,7 +377,7 @@ export default function HomeClient() {
         id="home"
         className="relative min-h-screen flex items-center justify-center text-center px-6 overflow-hidden"
         variants={sectionFadeUp}
-        initial="visible"
+        initial="hidden"
         animate="visible"
         viewport={{ once: true }}
       >
@@ -399,7 +430,7 @@ export default function HomeClient() {
         id="about"
         className="py-24 px-6 bg-linear-to-b from-white via-gray-50 to-white"
         variants={sectionFadeLeft}
-        initial="visible"
+        initial="hidden"
         animate="visible"
         viewport={{ once: true }}
       >
@@ -477,7 +508,7 @@ export default function HomeClient() {
         id="gallery"
         className="py-20 px-6 bg-linear-to-b from-gray-900 via-gray-800 to-gray-900"
         variants={sectionZoom}
-        initial="visible"
+        initial="hidden"
         animate="visible"
         viewport={{ once: true }}
       >
@@ -488,28 +519,50 @@ export default function HomeClient() {
           {t.galleryTitle}
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[
-            "/images/gallery-1.jpg",
-            "/images/gallery-2.jpg",
-            "/images/gallery-3.jpg",
-            "/images/gallery-4.jpg",
-            "/images/gallery-5.jpg",
-            "/images/gallery-6.jpg",
-            "/images/gallery-7.jpg",
-            "/images/gallery-8.jpg",
-          ].map((img, index) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
+          {galleryImages.map((img, index) => (
             <div
               key={index}
-              className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1"
+              onClick={() => setGalleryIndex(index)} // 3. SET INDEX SAAT KLIK
+              className="relative group overflow-hidden rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer"
             >
               <div
                 className="h-48 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
                 style={{ backgroundImage: `url(${img})` }}
               />
+              {/* Overlay Tipis saat Hover */}
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <div className="bg-white/20 backdrop-blur-md p-2 rounded-full">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
           ))}
         </div>
+
+        {/* 4. KOMPONEN LIGHTBOX */}
+        <Lightbox
+          index={galleryIndex}
+          open={galleryIndex >= 0}
+          close={() => setGalleryIndex(-1)}
+          slides={slides}
+          plugins={[Download, Thumbnails, Zoom]}
+          // Kustomisasi animasi (opsional)
+          animation={{ fade: 300 }}
+        />
       </motion.section>
 
       {/* ================= PAKET ================= */}
@@ -517,7 +570,7 @@ export default function HomeClient() {
         id="paket"
         className="py-20 px-6 bg-linear-to-b from-gray-50 via-white to-gray-100"
         variants={sectionFadeUp}
-        initial="visible"
+        initial="hidden"
         animate="visible"
         viewport={{ once: true }}
       >
@@ -546,13 +599,13 @@ export default function HomeClient() {
                 <div className="flex gap-3 mt-4">
                   <button
                     onClick={() => setDetail(p)}
-                    className="flex-1 bg-white/90 cursor-pointer text-black py-2 rounded-lg"
+                    className="flex-1 bg-white/70 hover:bg-white cursor-pointer text-black py-2 rounded-lg"
                   >
                     {t.detail}
                   </button>
                   <button
                     onClick={() => setBooking(p)}
-                    className="flex-1 bg-red-600 cursor-pointer py-2 rounded-lg"
+                    className="flex-1 bg-red-900 hover:bg-red-600 cursor-pointer py-2 rounded-lg"
                   >
                     {t.booking}
                   </button>
@@ -568,7 +621,7 @@ export default function HomeClient() {
         id="blog"
         className="py-20 px-6 bg-linear-to-b from-white via-gray-50 to-white"
         variants={sectionFadeUp}
-        initial="visible"
+        initial="hidden"
         animate="visible"
         viewport={{ once: true }}
       >
@@ -593,6 +646,7 @@ export default function HomeClient() {
                     alt={blog.title[lang]} // Mengakses judul berdasarkan bahasa
                     fill
                     className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Tambahkan ini
                   />
                 </div>
 
@@ -637,7 +691,7 @@ export default function HomeClient() {
         id="kontak"
         className="py-20 px-6 bg-linear-to-b from-white via-gray-100 to-white"
         variants={sectionFadeUp}
-        initial="visible"
+        initial="hidden"
         animate="visible"
         viewport={{ once: true }}
       >
@@ -817,7 +871,10 @@ export default function HomeClient() {
             <form
               onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
-                if (!booking) return;
+                if (!booking || !pricePerPax) {
+                  alert("Silahkan pilih paket terlebih dahulu");
+                  return;
+                }
 
                 const formData = new FormData(e.currentTarget);
 
