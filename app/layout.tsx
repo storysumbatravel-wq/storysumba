@@ -1,9 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import { LanguageProvider } from "@/app/context/ContectLanguage";
-import Navbar from "@/app/components/Navbar"; // Sesuaikan path-nya
-import Footer from "@/app/components/Footer"; // Sesuaikan path-nya
+import Providers from "./providers";
+import ClientLayout from "./ClientLayout";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -90,9 +89,9 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="id">
       <head>
@@ -117,11 +116,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LanguageProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </LanguageProvider>
+        <Providers>
+          <ClientLayout>{children}</ClientLayout>
+        </Providers>
       </body>
     </html>
   );

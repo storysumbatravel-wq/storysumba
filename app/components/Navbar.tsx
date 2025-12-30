@@ -29,7 +29,7 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur shadow-sm"
     >
       {/* SEO HIDDEN TITLE */}
@@ -80,7 +80,7 @@ export default function Navbar() {
           className="md:hidden text-black"
           onClick={() => setMenuOpen(true)}
         >
-          <Menu size={24} />
+          <Menu size={20} />
         </button>
       </div>
 
@@ -104,14 +104,14 @@ export default function Navbar() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
+              transition={{ type: "tween", duration: 0.7 }}
               className="absolute top-0 right-0 w-72 h-screen bg-black text-gray-300 p-6 flex flex-col"
             >
               <button
                 className="self-end text-white mb-8"
                 onClick={() => setMenuOpen(false)}
               >
-                <X size={24} />
+                <X size={20} />
               </button>
 
               <div className="flex flex-col gap-6 text-lg">

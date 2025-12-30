@@ -35,6 +35,7 @@ type PriceItem = {
 
 type PackageDetail = {
   description: LangText;
+  itinerary: LangList;
   facilities: LangList;
   exclude: LangList;
   prices: PriceItem[];
@@ -93,6 +94,18 @@ const packageDetails: Record<number, PackageDetail> = {
       id: "Paket wisata 3 hari 2 malam dengan destinasi unggulan, cocok untuk liburan singkat.",
       en: "3 days 2 nights tour package, perfect for a short getaway.",
     },
+    itinerary: {
+      id: [
+        "Hari 1: Jemput Bandara Tambolaka  – Kampung Ratenggaro – Pantai Mandorak – Danau Weikuri ",
+        "Hari 1: Bukit Hiliwuku – Air Terjun Weimarang – Sunset Pantai Wailakiri ",
+        "Hari 3: Check-Out Hotel – Kampung Raja Prailiu – Transfer bandara",
+      ],
+      en: [
+        "Day 1: Pick up at Tambolaka Airport – Ratenggaro Village – Mandorak Beach – Weikuri Lagoon",
+        "Day 2: Hiliwuku Hill – Weimarang Waterfall – Sunset at Wailakiri Beach ",
+        "Day 3: Check-Out hotel – Prailiu King Village – Transfer to airport",
+      ],
+    },
     facilities: {
       id: [
         "Hotel bintang 3",
@@ -131,6 +144,20 @@ const packageDetails: Record<number, PackageDetail> = {
     description: {
       id: "Paket wisata 4 hari 3 malam dengan itinerary lebih lengkap dan santai.",
       en: "4 days 3 nights package with more complete itinerary.",
+    },
+    itinerary: {
+      id: [
+        "Hari 1: Bandara Tambolaka – Kampung adat Ratenggaro – Pantai Mandorak – Danau Weikuri",
+        "Hari 2: Kampung Adat Praijing – Bukit Warinding",
+        "Hari 3: Air Terjun Tanggedu – Savana Purakambera – Bukit Tanau",
+        "Hari 4: Check-out Hotel – Kampung Raja Prailiu – Transfer bandara",
+      ],
+      en: [
+        "Day 1: Tambolaka Airport – Ratenggaro Traditional Village – Mandorak Beach – Weikuri Lagoon",
+        "Day 2: Prai Ijing Traditional Village – Warinding Hill –",
+        "Day 3: Tanggedu Waterfall – Puru Kambera savanna – Tanau Hill ",
+        "Day 4: Hotel check-out  – Prailiu King Village– Airport transfer",
+      ],
     },
     facilities: {
       id: [
@@ -171,6 +198,22 @@ const packageDetails: Record<number, PackageDetail> = {
       id: "Paket wisata 5 hari 4 malam untuk eksplorasi destinasi terbaik.",
       en: "5 days 4 nights tour to explore top destinations.",
     },
+    itinerary: {
+      id: [
+        "Hari 1: Penjemputan bandara – Kampung Adat Ratenggaro – Pantai Mandorak – Danau Weikuri",
+        "Hari 2: Air Terjun Weikucara – Bukit Warinding",
+        "Hari 3: Air Terjun Tanggedu – Savana Puru Kambera – Bukit Tanau",
+        "Hari 4: Air Terjun Weimarang – Pantai Wailakiri",
+        "Hari 5: Check-Out Hotel – Kampung Raja Prailiu– Transfer Bandara",
+      ],
+      en: [
+        "Day 1: Airport pick-up – Ratenggaro Traditional Village – Mandorak Beach – Weikuri Lagoon",
+        "Day 2: Weikucara Waterfall – Warinding Hill",
+        "Day 3: Tanggedu Waterfall – Puru Kambera Savanna – Tanau Hill",
+        "Day 4: Waimarang Waterfall – Wailakiri Beach",
+        "Day 5: Check-Out – Prailiu King Village – Airport transfer",
+      ],
+    },
     facilities: {
       id: [
         "Hotel bintang 3",
@@ -210,6 +253,24 @@ const packageDetails: Record<number, PackageDetail> = {
       id: "Paket wisata 6 hari 5 malam dengan pengalaman mendalam.",
       en: "6 days 5 nights immersive travel experience.",
     },
+    itinerary: {
+      id: [
+        "Hari 1: Bandara Tambolaka – Kampung Adat Ratenggaro – Pantai Mandorak – Danau Weikuri ",
+        "Hari 2: Air Terjun Weikucara – Kampung Adat Prai Ijing",
+        "Hari 3: Watumbela – Bukit Wairinding",
+        "Hari 4: Bukit Hiliwuku – Air Terjun Weimarang – Pantai Wailakiri",
+        "Hari 5: Air Terjun Tanggedu – Savanna Puru Kambera – Bukit Tanau",
+        "Hari 6: Check-out Hotel – Kampung Raja Prailiu – Transfer bandara",
+      ],
+      en: [
+        "Day 1: Tambolaka Airport – Ratenggaro Traditional Village – Mandora Beach – Weikuri Lagoon",
+        "Day 2: Weikucara Waterfall – Prai Ijing Traditional Village",
+        "Day 3: Watumbela – Wairinding Hill",
+        "Day 4: Hiliwuku Hill – Weimarang Waterfall – Walakiri Beach",
+        "Day 5: Tanggedu Waterfall – Puru Kambera Savanna – Tanau Hill",
+        "Day 6: Hotel check-out – Prailiu King Village – Airport transfer",
+      ],
+    },
     facilities: {
       id: [
         "Hotel bintang 3",
@@ -248,6 +309,26 @@ const packageDetails: Record<number, PackageDetail> = {
     description: {
       id: "Paket wisata 7 hari 6 malam untuk liburan lengkap & santai.",
       en: "7 days 6 nights full and relaxing holiday package.",
+    },
+    itinerary: {
+      id: [
+        "Hari 1: Penjemputan bandara – Kampung Adat Ratenggaro – Pantai Mandorak – Danau Weikuri",
+        "Hari 2: Air Terjun Weikucara – Kampung Adat Prai Ijing",
+        "Hari 3: Watumbela – Bukit Warinding",
+        "Hari 4: Bukit Hiliwuku – Air Terjun Weimarang – Pantai Walakiri",
+        "Hari 5: Air Terjun Tanggedu – Savanna Puru Kambera – Bukit Tanau",
+        "Hari 6: Kampung Adat Rende – Sunset Watu Parunu – Kampung Adat Pau",
+        "Hari 7: Check-out Hotel – Kampung Raja Prailiu – Transfer bandara",
+      ],
+      en: [
+        "Day 1: Airport pick-up – Ratenggaro Traditional Village – Mandorak Beach – Weikuri Lagoon",
+        "Day 2: Weikucara Waterfall – Prai Ijing Traditional Village",
+        "Day 3: Watumbela – Warinding Hill",
+        "Day 4: Hilliwuku Hill – Waimarang Waterfall – Walakiri Beach",
+        "Day 5: Tanggedu Waterfall – Puru Kambera Savanna – Tanau Hill",
+        "Day 6: Rende Traditional Village – Sunset at Watu Parunu – Pau Traditional Village",
+        "Day 7: Hotel check-out – Prailiu King Village – Airport transfer",
+      ],
     },
     facilities: {
       id: [
@@ -771,7 +852,7 @@ export default function HomeClient() {
           onClick={() => setDetail(null)}
         >
           <div
-            className="bg-white max-w-5xl w-full rounded-2xl relative max-h-[90vh] overflow-y-auto md:overflow-hidden"
+            className="bg-white max-w-6xl w-full rounded-2xl relative max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close */}
@@ -782,20 +863,11 @@ export default function HomeClient() {
               ✕
             </button>
 
-            {/* Image */}
-            {/* <div
-              className="h-64 md:h-80 bg-cover bg-center"
-              style={{ backgroundImage: `url(${detail.image})` }}
-            /> */}
-
-            {/* Content */}
-            <div className="p-6 md:p-8 grid md:grid-cols-2 gap-8">
-              {/* LEFT */}
+            {/* ================= CONTENT ================= */}
+            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* ================= COL 2 : FASILITAS ================= */}
               <div>
-                <h3 className="text-2xl font-bold mb-2">Paket {detail.name}</h3>
-                <p className="text-gray-600 mb-4">
-                  {packageDetails[detail.id].description[lang]}
-                </p>
+                <h3 className="text-2xl font-bold mb-3">Paket {detail.name}</h3>
 
                 <div className="mb-6">
                   <h4 className="font-semibold mb-2">
@@ -814,7 +886,6 @@ export default function HomeClient() {
                   <h4 className="font-semibold mb-2">
                     {lang === "id" ? "Tidak Termasuk:" : "Exclude:"}
                   </h4>
-
                   <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
                     {packageDetails[detail.id].exclude[lang].map(
                       (item: string, i: number) => (
@@ -825,8 +896,30 @@ export default function HomeClient() {
                 </div>
               </div>
 
-              {/* RIGHT */}
-              <div className="bg-gray-50 rounded-xl p-6">
+              {/* ================= COL 3 : ITINERARY / DESKRIPSI ================= */}
+              <div>
+                <h4 className="font-semibold mb-3">
+                  {lang === "id" ? "Itinerary" : "Itinerary"}
+                </h4>
+
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                  {packageDetails[detail.id].description[lang]}
+                </p>
+
+                <ul className="space-y-2 text-sm text-gray-600">
+                  {packageDetails[detail.id].itinerary[lang].map(
+                    (day: string, i: number) => (
+                      <li key={i} className="flex gap-2">
+                        <span className="font-semibold">•</span>
+                        <span>{day}</span>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+
+              {/* ================= COL 1 : BOOKING ================= */}
+              <div className="bg-gray-50 rounded-xl p-6 h-fit sticky top-6">
                 <h4 className="font-semibold mb-4">
                   {lang === "id" ? "Harga Paket" : "Package Prices"}
                 </h4>
@@ -847,8 +940,8 @@ export default function HomeClient() {
 
                 <button
                   onClick={() => {
-                    setDetail(null); // tutup modal detail
-                    setBooking(detail); // buka modal booking + kirim data paket
+                    setDetail(null);
+                    setBooking(detail);
                   }}
                   className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
                 >

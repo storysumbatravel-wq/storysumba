@@ -29,25 +29,15 @@ export const blogs: BlogItem[] = [
       id: `Keajaiban Bima Sakti di Langit Sumba
           Sumba sering dijuluki sebagai "Pulau Terlupakan," namun bagi para pemburu bintang, pulau ini adalah surga yang nyata. Karena pembangunan infrastruktur yang masih terbatas, Sumba memiliki tingkat polusi cahaya yang sangat rendah. Hal ini menciptakan langit malam yang murni, gelap gulita, dan transparan, memberikan panggung sempurna bagi galaksi Bima Sakti untuk memamerkan kemegahannya.
 
-          Saat berdiri di tepi Pantai Walakiri atau di atas bukit sabana yang luas, Anda akan melihat pita kabut bercahaya yang membentang dari cakrawala ke cakrawala. Ini bukan sekadar kumpulan bintang; ini adalah penampakan jutaan matahari dan debu kosmik yang membentuk struktur galaksi kita. Di Sumba, detail debu antarbintang (nebula gelap) terlihat sangat kontras dengan latar belakang jutaan bintang yang berkelap-kelip tajam. Keheningan alam Sumba, yang hanya diiringi suara deburan ombak atau tiupan angin di rumput sabana, menambah kesan magis yang membuat siapa pun merasa kecil di hadapan alam semesta yang luas.
-
-          Detail Teknis Pengamatan:
-          Waktu Terbaik: Musim kemarau antara bulan Juni hingga September.
-          Lokasi Favorit: Pantai Walakiri, Bukit Tenau, dan Desa Adat Ratenggaro.
-          Keunikan: Karena letak geografisnya di belahan bumi selatan, pusat galaksi (Galactic Core) terlihat sangat tinggi dan jelas di langit Sumba.`,
+          Saat berdiri di tepi Pantai Walakiri atau di atas bukit sabana yang luas, Anda akan melihat pita kabut bercahaya yang membentang dari cakrawala ke cakrawala. Ini bukan sekadar kumpulan bintang; ini adalah penampakan jutaan matahari dan debu kosmik yang membentuk struktur galaksi kita. Di Sumba, detail debu antarbintang (nebula gelap) terlihat sangat kontras dengan latar belakang jutaan bintang yang berkelap-kelip tajam. Keheningan alam Sumba, yang hanya diiringi suara deburan ombak atau tiupan angin di rumput sabana, menambah kesan magis yang membuat siapa pun merasa kecil di hadapan alam semesta yang luas.`,
 
       en: `The Majesty of the Milky Way in Sumba
           Sumba is often referred to as the "Forgotten Island," but for stargazers, it is a true sanctuary. Due to its limited infrastructure and remote nature, Sumba possesses incredibly low levels of light pollution. This results in a pristine, ink-black, and transparent night sky, providing the ultimate stage for the Milky Way galaxy to reveal its full splendor.
 
-          Standing on the shores of Walakiri Beach or atop the vast rolling savannahs, you will witness a luminous band of celestial fog stretching from horizon to horizon. This is not merely a cluster of stars; it is the visible manifestation of millions of suns and cosmic dust forming the structure of our galaxy. In Sumba, the intricate details of interstellar dust (dark nebulae) stand in sharp contrast against a backdrop of millions of diamond-like stars. The profound silence of the Sumba wilderness, broken only by the sound of crashing waves or the wind whispering through the grass, enhances a magical atmosphere that humbles anyone before the vastness of the universe.
-          
-          Observation Highlights:
-          Best Time: The dry season between June and September.
-          Top Locations: Walakiri Beach, Tenau Hill, and Ratenggaro Traditional Village.
-          The View: Given its position in the Southern Hemisphere, the Galactic Core appears exceptionally high and vivid in the Sumba sky, offering a perspective rarely seen in the northern parts of the world.`,
+          Standing on the shores of Walakiri Beach or atop the vast rolling savannahs, you will witness a luminous band of celestial fog stretching from horizon to horizon. This is not merely a cluster of stars; it is the visible manifestation of millions of suns and cosmic dust forming the structure of our galaxy. In Sumba, the intricate details of interstellar dust (dark nebulae) stand in sharp contrast against a backdrop of millions of diamond-like stars. The profound silence of the Sumba wilderness, broken only by the sound of crashing waves or the wind whispering through the grass, enhances a magical atmosphere that humbles anyone before the vastness of the universe.`,
     },
     image: "/images/blog-1.jpg",
-    date: "2025-01-10",
+    date: "2025-12-25",
   },
   {
     id: 2,
@@ -106,7 +96,7 @@ export const blogs: BlogItem[] = [
           Sumbanese people hold their traditions in high regard. Always ask for permission before taking photos of locals or entering traditional houses. Offering "Sirih Pinang" (betel nut) or giving a small voluntary donation is often seen as a sign of respect when visiting traditional villages.`,
     },
     image: "/images/blog-2.jpg",
-    date: "2025-01-18",
+    date: "2025-12-27",
   },
   {
     id: 3,
@@ -172,6 +162,6 @@ export const blogs: BlogItem[] = [
           If your main interest is culture, you must visit during the Pasola Festival. This traditional cavalry war ritual is held to welcome the harvest season. The exact dates are determined by the Ratos (priests) based on the arrival of Nyale (colorful sea worms) on the shores.`,
     },
     image: "/images/blog-3.jpg",
-    date: "2025-01-25",
+    date: "2025-12-30",
   },
 ];
